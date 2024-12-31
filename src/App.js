@@ -8,7 +8,7 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-function Board({ isXNext, squares, onPlay }) {
+function Board({ isXNext, squares, onPlay, currentMove }) {
   function handelClick(i) {
     if (squares[i] != null || calculateWinner(squares)) return;
 
@@ -24,6 +24,8 @@ function Board({ isXNext, squares, onPlay }) {
   let status;
   if (winner) {
     status = "Winner: " + winner;
+  } else if (currentMove == 9) {
+    status = "Draw, Try Agian?";
   } else {
     status = "Next player: " + (isXNext ? "X" : "O");
   }
@@ -85,7 +87,12 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-        <Board isXNext={isXNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board
+          isXNext={isXNext}
+          squares={currentSquares}
+          onPlay={handlePlay}
+          currentMove={currentMove}
+        />
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
